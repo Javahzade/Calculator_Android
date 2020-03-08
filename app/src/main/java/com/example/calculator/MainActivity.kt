@@ -63,13 +63,15 @@ class MainActivity : AppCompatActivity() {
     }
     fun zeroButton(view: View) {
         if (result != error) {
-            if (startNumber != "0") {
+            if (resultLabel.text == ""){
+                startNumber = "${zero.text}"
+                resultLabel.text = startNumber
+            }else if (resultLabel.text == "0") {
+                startNumber = "0"
+                resultLabel.text = startNumber
+            } else {
                 startNumber += "${zero.text}"
                 resultLabel.text = startNumber
-            }else {
-                startNumber = "0." + "${zero.text}"
-                resultLabel.text = startNumber
-                isDotPressed = true
             }
         } else {
             return
@@ -77,72 +79,117 @@ class MainActivity : AppCompatActivity() {
     }
     fun oneButton(view: View) {
         if (result != error) {
-            startNumber += "${one.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${one.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${one.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun twoButton(view: View) {
         if (result != error) {
-            startNumber += "${two.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${two.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${two.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun threeButton(view: View) {
         if (result != error) {
-            startNumber += "${three.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${three.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${three.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun fourButton(view: View) {
         if (result != error) {
-            startNumber += "${four.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${four.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${four.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun fiveButton(view: View) {
         if (result != error) {
-            startNumber += "${five.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${five.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${five.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun sixButton(view: View) {
         if (result != error) {
-            startNumber += "${six.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${six.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${six.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun sevenButton(view: View) {
         if (result != error) {
-            startNumber += "${seven.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${seven.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${seven.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun eightButton(view: View) {
         if (result != error) {
-            startNumber += "${eight.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${eight.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${eight.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
     }
     fun nineButton(view: View) {
         if (result != error) {
-            startNumber += "${nine.text}"
-            resultLabel.text = startNumber
+            if (resultLabel.text == "0"){
+                startNumber = "${nine.text}"
+                resultLabel.text = startNumber
+            }else{
+                startNumber += "${nine.text}"
+                resultLabel.text = startNumber
+            }
         } else {
             return
         }
@@ -212,14 +259,14 @@ class MainActivity : AppCompatActivity() {
             if (!isDotPressed) {
                 if (startNumber != "") {
                     startNumber += "."
-                } else {
-                    startNumber = "0."
-                }
+               } else {
+                   startNumber = "0."
+               }
                 resultLabel.text = startNumber
                 isDotPressed = true
-            } else {
-                return
             }
+            }else {
+            return
         }
     }
     fun clearButton(view: View) {
@@ -248,12 +295,9 @@ class MainActivity : AppCompatActivity() {
                 } else if (currentOperation == Operation.Multiply) {
                     result = "${num1.toFloat() * num2.toFloat()}"
                 } else if (currentOperation == Operation.Divide) {
-                        result = "${num1.toFloat() / num2.toFloat()}"
-                    if (num1 == "0" && num2 == "0"){
-                        result = "Infinity"
-                    }
+                    result = "${num1.toFloat() / num2.toFloat()}"
                 }
-                if (result == "Infinity"){
+                if (result == "Infinity" || result == "NaN" || result == "-Infinity"){ //Можно было и try catch сделать, но это в будущем))
                     result = error
                 } else {
                     num1 = result
@@ -271,13 +315,13 @@ class MainActivity : AppCompatActivity() {
     }
     fun equalityButton(view: View) {
         if (result != error) {
-                isDotPressed = false
-                mathOperation(operation = currentOperation)
+            isDotPressed = false
+            mathOperation(operation = currentOperation)
         } else {
             return
         }
     }
-    fun IsInteger(a: String) : Boolean {
+    fun IsInteger(a: String) : Boolean { // эту функцию подсказал Самир
         when (a) {
             "0" -> return true
             "1" -> return true
@@ -299,7 +343,7 @@ class MainActivity : AppCompatActivity() {
             var number = ""
             var count = 0
             for (i in result) {
-                if (IsInteger(i.toString())) {
+                if (IsInteger(i.toString()) || i.toString() == "-") {
                     number += i
                     if (count == result.count() - 1) {
                         arr.add(number)
